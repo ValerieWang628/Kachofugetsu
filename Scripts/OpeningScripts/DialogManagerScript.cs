@@ -9,8 +9,8 @@ public class DialogManagerScript : MonoBehaviour
     [SerializeField] private GameObject thisGoemonDialogBox;
     [SerializeField] private Text thisFujikoText;
     [SerializeField] private Text thisGoemonText;
-    [SerializeField] private Text thisFujikoPrompt;
-    [SerializeField] private Text thisGoemonPrompt;
+    [SerializeField] private Text thisPressEnter;
+    [SerializeField] private GameObject thisFujikoLip;
 
     private List<string> thisFujikoDialogBook = new List<string>();
     private List<string> thisGoemonDialogBook = new List<string>();
@@ -71,7 +71,7 @@ public class DialogManagerScript : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
-                    thisFujikoPrompt.gameObject.SetActive(false);
+                    thisPressEnter.gameObject.SetActive(false);
 
                     if (thisFujikoHasSpoken)
                     {
@@ -98,6 +98,7 @@ public class DialogManagerScript : MonoBehaviour
                 {
                     HideGoemonDialog();
                     DisplayFujikoDialog();
+                    thisFujikoLip.GetComponent<LipMovingScript>().StartTalking();
 
                     thisFujikoHasSpoken = true;
                     thisDialogState = State.eWaiting;
@@ -108,6 +109,7 @@ public class DialogManagerScript : MonoBehaviour
                 {
                     HideFujikoDialog();
                     DisplayGoemonDialog();
+                    thisFujikoLip.GetComponent<LipMovingScript>().StopTalking();
 
                     thisFujikoHasSpoken = false;
 
@@ -121,20 +123,17 @@ public class DialogManagerScript : MonoBehaviour
     protected void HideFujikoDialog()
     {
         thisFujikoDialogBox.gameObject.SetActive(false);
-        //thisFujikoPrompt.gameObject.SetActive(false);
         thisFujikoText.text = " ";
     }
 
     protected void HideGoemonDialog()
     {
         thisGoemonDialogBox.gameObject.SetActive(false);
-        //thisGoemonPrompt.gameObject.SetActive(false);
         thisGoemonText.text = " ";
     }
 
     protected void DisplayFujikoDialog()
     {
-        //thisFujikoPrompt.gameObject.SetActive(true);
         thisFujikoDialogBox.gameObject.SetActive(true);
         thisFujikoText.text = thisFujikoDialogBook[thisCurrentDialogIndex];
     }
@@ -142,7 +141,6 @@ public class DialogManagerScript : MonoBehaviour
     protected void DisplayGoemonDialog()
     {
         thisGoemonDialogBox.gameObject.SetActive(true);
-        //thisGoemonPrompt.gameObject.SetActive(true);
         thisGoemonText.text = thisGoemonDialogBook[thisCurrentDialogIndex];
     }
 }

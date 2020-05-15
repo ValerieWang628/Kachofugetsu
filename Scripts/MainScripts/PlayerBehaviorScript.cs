@@ -165,7 +165,7 @@ public class PlayerBehaviorScript : MonoBehaviour
                         {
                             // player turn start again
                             StartPlayerTurn();
-                            print("player now has one more round\n");
+                            //print("player now has one more round\n");
                             return;
                         }
                         else
@@ -180,7 +180,7 @@ public class PlayerBehaviorScript : MonoBehaviour
                             {
                                 // switch to idle state because the npc's turn is about to start
                                 thisPlayerState = State.eIdle;
-                                print("player is now idle\n");
+                                //print("player is now idle\n");
                                 thisNpcBehavior.StartNpcTurn();
                             }
                         }
@@ -223,8 +223,17 @@ public class PlayerBehaviorScript : MonoBehaviour
         if (clickableCount == 0)
         {
             // UnityEditor.EditorApplication.isPlaying = false;
-            thisCardServer.AnnounceGameResult();
+            //thisCardServer.AnnounceGameResult();
+            StartCoroutine(CountDownForResult());
         }
+    }
+
+    protected IEnumerator CountDownForResult()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        thisCardServer.AnnounceGameResult();
+        yield break;
     }
 
     public void StartPlayerTurn()

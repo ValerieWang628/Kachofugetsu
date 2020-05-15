@@ -48,6 +48,8 @@ public class NpcBehaviorScript : MonoBehaviour
     // this is a gate to make the player state to wait for the lerping animation
     private bool thisIsNowLerpingToShuffle = false;
 
+    private bool thisGameHasEnded = false;
+
     private enum State
     {
         eActivated,
@@ -146,21 +148,24 @@ public class NpcBehaviorScript : MonoBehaviour
 
             case State.eZeroSelected:
                 {
-                    thisStateTimer -= Time.deltaTime;
-
-                    if (thisStateTimer < thisActionLag / 2)
+                    if (!thisGameHasEnded)
                     {
-                        // during half of the action lag, update the turn prompt
-                        thisUiManager.UpdateNpcTurn();
+                        thisStateTimer -= Time.deltaTime;
+
+                        if (thisStateTimer < thisActionLag / 2)
+                        {
+                            // during half of the action lag, update the turn prompt
+                            thisUiManager.UpdateNpcTurn();
+                        }
+
+                        if (thisStateTimer < 0)
+                        {
+                            RandomlyFlipOneCard();
+                            //print("Npc flipped one card\n");
+                            InitializeStateTimer();
+                            thisNpcState = State.eOneSelected;
+                        }
                     }
-
-                    if (thisStateTimer < 0)
-                    {
-                        RandomlyFlipOneCard();
-                        print("Npc flipped one card\n");
-                        InitializeStateTimer();
-                        thisNpcState = State.eOneSelected;
-                    }  
                 }
                 break;
 
@@ -185,7 +190,7 @@ public class NpcBehaviorScript : MonoBehaviour
                                 // if the first one in memory matches the already selected one
                                 // add the one in the memory as the second selected one so that they can match
                                 FlipTheParticularCard(thisMemoryList[0]);
-                                print("Npc flipped the matched one" + thisMemoryList[0].name +" \n");
+                                //print("Npc flipped the matched one" + thisMemoryList[0].name +" \n");
 
                                 // reset timer
                                 InitializeStateTimerToDisplayDuration();
@@ -197,7 +202,7 @@ public class NpcBehaviorScript : MonoBehaviour
                             else if (CheckIfTwoTilesAreTheSame(thisMemoryList[1], thisSelectionList[0]))
                             {
                                 FlipTheParticularCard(thisMemoryList[1]);
-                                print("Npc flipped the matched one" + thisMemoryList[1].name + " \n");
+                                //print("Npc flipped the matched one" + thisMemoryList[1].name + " \n");
                                 InitializeStateTimerToDisplayDuration();
                                 UpdateMemoryFromSelfSelection();
                                 thisNpcState = State.eTwoSelected;
@@ -205,7 +210,7 @@ public class NpcBehaviorScript : MonoBehaviour
                             else
                             {
                                 RandomlyFlipOneCard();
-                                print("Npc flipped another random one\n");
+                                //print("Npc flipped another random one\n");
                                 InitializeStateTimerToDisplayDuration();
                                 UpdateMemoryFromSelfSelection();
                                 thisNpcState = State.eTwoSelected;
@@ -214,7 +219,7 @@ public class NpcBehaviorScript : MonoBehaviour
                         else
                         {
                             RandomlyFlipOneCard();
-                            print("Npc flipped another random one\n");
+                            //print("Npc flipped another random one\n");
                             InitializeStateTimerToDisplayDuration();
                             UpdateMemoryFromSelfSelection();
                             thisNpcState = State.eTwoSelected;
@@ -240,7 +245,7 @@ public class NpcBehaviorScript : MonoBehaviour
                         {
                             StartNpcTurn();
                             InitializeStateTimer();
-                            print("npc now has one more round\n");
+                            //print("npc now has one more round\n");
                             return;
                         }
                         else
@@ -331,13 +336,20 @@ public class NpcBehaviorScript : MonoBehaviour
         {
             // when the game is over, temporarily exit out of game editor
             //UnityEditor.EditorApplication.isPlaying = false;
+            thisGameHasEnded = true;
 
-            thisCardServer.AnnounceGameResult();
+            StartCoroutine(CountDownForResult());
+            //thisCardServer.AnnounceGameResult();
         }
-        else
-        {
-            print("clickable list length: " + thisClickableCards.Count + "\n");
-        }
+    }
+
+    protected IEnumerator CountDownForResult()
+    {
+        // wait for a while to get the result
+        yield return new WaitForSeconds(1.5f);
+
+        thisCardServer.AnnounceGameResult();
+        yield break;
     }
 
     protected bool CheckIfTheCardIsInMemory(GameObject aCard)
@@ -384,7 +396,7 @@ public class NpcBehaviorScript : MonoBehaviour
         // start animation
         aCard.GetComponent<CardScript>().StartFlipCoroutine();
 
-        print("randomly select one card: " + aCard.name + "\n");
+        //print("randomly select one card: " + aCard.name + "\n");
     }
 
     protected void FlipTheParticularCard(GameObject aCard)
@@ -423,12 +435,12 @@ public class NpcBehaviorScript : MonoBehaviour
                 break;
         }
 
-        foreach (GameObject aCard in thisMemoryList)
-        {
-            print("memory list updated from player selection: " + aCard.name + " \n");
-        }
+        //foreach (GameObject aCard in thisMemoryList)
+        //{
+        //    print("memory list updated from player selection: " + aCard.name + " \n");
+        //}
 
-        print("End of the memory List\n");
+        //print("End of the memory List\n");
     }
 
     protected void UpdateMemoryFromSelfSelection()
@@ -443,12 +455,12 @@ public class NpcBehaviorScript : MonoBehaviour
         thisMemoryList.Add(thisSelectionList[0]);
         thisMemoryList.Add(thisSelectionList[1]);
 
-        foreach (GameObject aCard in thisMemoryList)
-        {
-            print("memory list updated from slef selection: " + aCard.name + " \n");
-        }
+        //foreach (GameObject aCard in thisMemoryList)
+        //{
+        //    print("memory list updated from slef selection: " + aCard.name + " \n");
+        //}
 
-        print("End of the memory List\n");
+        //print("End of the memory List\n");
     }
 
     public int GetNpcHitPoints()
@@ -506,7 +518,7 @@ public class NpcBehaviorScript : MonoBehaviour
                     {
                         HurtPlayer();
                         // npc gets to have one more turn
-                        print("one more turn for Npc\n");
+                        //print("one more turn for Npc\n");
                         thisOneMoreRoundAllowed = true;
                     }
                     break;

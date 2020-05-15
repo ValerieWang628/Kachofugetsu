@@ -11,7 +11,7 @@ public class UiManagerScript : MonoBehaviour
     // so it won't interfere with auto completion
     [SerializeField] private GameObject theNpc;
     [SerializeField] private GameObject thePlayer;
-
+    [SerializeField] private GameObject thisSwirl;
 
     private NpcBehaviorScript thisNpcBehavior;
     private PlayerBehaviorScript thisPlayerBehavior;
@@ -43,21 +43,39 @@ public class UiManagerScript : MonoBehaviour
     public void UpdatePlayerTurn()
     {
         thisTurnPrompt.text = "Goemon";
+
+        //if (thisSwirl.activeSelf)
+        //{
+        //    thisSwirl.gameObject.SetActive(false);
+        //}
     }
 
     public void UpdateNpcTurn()
     {
         thisTurnPrompt.text = "Fujiko";
+
+        //if (thisSwirl.activeSelf)
+        //{
+        //    thisSwirl.GetComponent<Fade>().StartToFade();
+        //    //thisSwirl.gameObject.SetActive(false);
+        //}
     }
 
     public void UpdateShuffling()
     {
         thisTurnPrompt.text = "Shuffling";
+
+        ActivateSwirl();
     }
 
+    protected void ActivateSwirl()
+    {
+        thisSwirl.GetComponent<SwirlScript>().Manifest();
+    }
 
     protected void Update()
     {
         
     }
+
 }
