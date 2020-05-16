@@ -7,6 +7,9 @@ public class CardScript : MonoBehaviour
 
     private PlayerBehaviorScript thisPlayerBehaviorScript;
 
+    // the glow frame outside the card
+    private GameObject thisGlow;
+
     private float thisRotationIncrement = 1.2f;
 
     private bool thisHasBeenFlipped = false;
@@ -22,11 +25,18 @@ public class CardScript : MonoBehaviour
     protected void Start()
     {
         FindPlayerBehavior();
+        InitializeGlow();
     }
 
     protected void FindPlayerBehavior()
     {
         thisPlayerBehaviorScript = GameObject.Find("PlayerBehavior").GetComponent<PlayerBehaviorScript>();
+    }
+
+    protected void InitializeGlow()
+    {
+        thisGlow = this.transform.GetChild(2).gameObject;
+        thisGlow.SetActive(false);
     }
 
     protected void Update()
@@ -44,10 +54,10 @@ public class CardScript : MonoBehaviour
 
     protected void OnMouseDown()
     {
-     /* only if the player is at a state where s/he can click
-      * and if the card has not been flipped
-      * can this card be flipped
-      */   
+        /* only if the player is at a state where s/he can click
+         * and if the card has not been flipped
+         * can this card be flipped
+         */
 
         bool thePlayerCanClick = thisPlayerBehaviorScript.GetIfThePlayerCanClick();
 
@@ -55,6 +65,7 @@ public class CardScript : MonoBehaviour
         {
             if (!thisHasBeenFlipped)
             {
+
                 // pass the crad itself to player selection list
                 thisPlayerBehaviorScript.OnCardSelected(this.gameObject);
 
@@ -90,8 +101,10 @@ public class CardScript : MonoBehaviour
             this.transform.eulerAngles += new Vector3(0f, thisRotationIncrement, 0f);
             yield return null;
         }
+
         // make it unflippable
         thisHasBeenFlipped = true;
+        print("this has been flipped\n");
         yield break;
     }
 
@@ -114,6 +127,9 @@ public class CardScript : MonoBehaviour
          * the solution is to raise the threshold a bit so that it stops right at time
          */
 
+        this.thisHasBeenFlipped = false;
+        yield return null;
+
         while (this.transform.eulerAngles.y >= 1f)
         {
             //print(this.name + " flip back " + this.transform.eulerAngles.y + "\n");
@@ -122,7 +138,7 @@ public class CardScript : MonoBehaviour
         }
 
         // set the bool back so that it can be re-clicked
-        this.thisHasBeenFlipped = false;
+        //this.thisHasBeenFlipped = false;
         yield break;
     }
 
@@ -155,11 +171,15 @@ public class CardScript : MonoBehaviour
     protected void EmitGlow()
     {
         /* this func makes the glowing frame visible*/
+        thisGlow.SetActive(true);
+        print(this.name + "opened\n");
     }
 
     protected void OmitGlow()
     {
         /* this func makes the glowing frame invisible*/
+        thisGlow.SetActive(false);
+        print(this.name +"shutdown\n");
     }
 
     public void StopLerpToShuffleCoroutine()
