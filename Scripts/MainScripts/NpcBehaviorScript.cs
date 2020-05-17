@@ -137,6 +137,8 @@ public class NpcBehaviorScript : MonoBehaviour
                     /* this state is an interrim wake state 
                      * that completes some one-time things before selection*/
 
+                    
+
                     // once activated, update clickable list first
                     UpdateClickableList();
 
@@ -152,18 +154,25 @@ public class NpcBehaviorScript : MonoBehaviour
                     {
                         thisStateTimer -= Time.deltaTime;
 
-                        if (thisStateTimer < thisActionLag / 2)
-                        {
-                            // during half of the action lag, update the turn prompt
-                            thisUiManager.UpdateNpcTurn();
-                        }
-
                         if (thisStateTimer < 0)
                         {
                             RandomlyFlipOneCard();
                             //print("Npc flipped one card\n");
                             InitializeStateTimer();
                             thisNpcState = State.eOneSelected;
+
+                            return;
+                        }
+
+                        if (thisStateTimer < thisActionLag / 2)
+                        {
+                            // during half of the action lag, update the turn prompt
+                            thisUiManager.UpdateNpcTurn();
+
+                            // makes all cards emittable when cursor hovered on cards
+                            thisUiManager.MakeAllCardsEmittable();
+
+                            return;
                         }
                     }
                 }

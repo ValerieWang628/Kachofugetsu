@@ -48,6 +48,11 @@ public class CardScript : MonoBehaviour
 
     }
 
+    public void MakeEmittable()
+    {
+        thisEmittable = true;
+    }
+
     protected void OnMouseOver()
     {
         if (!thisHasBeenFlipped)
@@ -85,6 +90,7 @@ public class CardScript : MonoBehaviour
 
     protected void OnMouseExit()
     {
+
         if (!thisHasBeenFlipped)
         {
             OmitGlow();

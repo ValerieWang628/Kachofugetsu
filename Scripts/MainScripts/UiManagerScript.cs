@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class UiManagerScript : MonoBehaviour
 {
+    [SerializeField] private GameObject thisCardServer;
+
     [SerializeField] private Text thisNpcHpText;
     [SerializeField] private Text thisPlayerHpText;
     [SerializeField] private Text thisTurnPrompt;
@@ -44,21 +47,11 @@ public class UiManagerScript : MonoBehaviour
     {
         thisTurnPrompt.text = "Goemon";
 
-        //if (thisSwirl.activeSelf)
-        //{
-        //    thisSwirl.gameObject.SetActive(false);
-        //}
     }
 
     public void UpdateNpcTurn()
     {
         thisTurnPrompt.text = "Fujiko";
-
-        //if (thisSwirl.activeSelf)
-        //{
-        //    thisSwirl.GetComponent<Fade>().StartToFade();
-        //    //thisSwirl.gameObject.SetActive(false);
-        //}
     }
 
     public void UpdateShuffling()
@@ -76,6 +69,15 @@ public class UiManagerScript : MonoBehaviour
     protected void Update()
     {
         
+    }
+
+    public void MakeAllCardsEmittable()
+    {
+        List<GameObject> thisAllCards = thisCardServer.GetComponent<CardServerScript>().GetServedCards();
+        foreach (GameObject aCard in thisAllCards)
+        {
+            aCard.GetComponent<CardScript>().MakeEmittable();
+        }
     }
 
 }
