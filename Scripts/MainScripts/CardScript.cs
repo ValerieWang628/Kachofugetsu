@@ -22,7 +22,9 @@ public class CardScript : MonoBehaviour
 
     private bool thisShuffleHasEnded = false;
 
-    //private bool thisEmittable = true;
+    // this is a bool to control the gate of emission
+    // the permission to emit cannot depend on thisHasBeenFlipped because of weird coroutine
+    private bool thisEmittable = true;
 
     protected void Start()
     {
@@ -50,8 +52,10 @@ public class CardScript : MonoBehaviour
     {
         if (!thisHasBeenFlipped)
         {
-
-            EmitGlow();
+            if (thisEmittable)
+            {
+                EmitGlow();
+            }
         }
     }
 
@@ -61,6 +65,8 @@ public class CardScript : MonoBehaviour
          * and if the card has not been flipped
          * can this card be flipped
          */
+
+        thisEmittable = !thisEmittable;
 
         bool thePlayerCanClick = thisPlayerBehaviorScript.GetIfThePlayerCanClick();
 
