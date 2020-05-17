@@ -22,6 +22,8 @@ public class CardScript : MonoBehaviour
 
     private bool thisShuffleHasEnded = false;
 
+    //private bool thisEmittable = true;
+
     protected void Start()
     {
         FindPlayerBehavior();
@@ -48,11 +50,12 @@ public class CardScript : MonoBehaviour
     {
         if (!thisHasBeenFlipped)
         {
+
             EmitGlow();
         }
     }
 
-    protected void OnMouseDown()
+    protected void OnMouseUp()
     {
         /* only if the player is at a state where s/he can click
          * and if the card has not been flipped
@@ -70,7 +73,6 @@ public class CardScript : MonoBehaviour
                 thisPlayerBehaviorScript.OnCardSelected(this.gameObject);
 
                 StartFlipCoroutine();
-                //thisHasBeenFlipped = true;
             }
         }
     }
@@ -104,7 +106,6 @@ public class CardScript : MonoBehaviour
 
         // make it unflippable
         thisHasBeenFlipped = true;
-        print("this has been flipped\n");
         yield break;
     }
 
@@ -172,14 +173,12 @@ public class CardScript : MonoBehaviour
     {
         /* this func makes the glowing frame visible*/
         thisGlow.SetActive(true);
-        print(this.name + "opened\n");
     }
 
     protected void OmitGlow()
     {
         /* this func makes the glowing frame invisible*/
         thisGlow.SetActive(false);
-        print(this.name +"shutdown\n");
     }
 
     public void StopLerpToShuffleCoroutine()
