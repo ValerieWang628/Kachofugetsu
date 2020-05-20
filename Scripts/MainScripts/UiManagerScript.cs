@@ -37,12 +37,30 @@ public class UiManagerScript : MonoBehaviour
 
     public void UpdateNpcText()
     {
-        thisNpcHpText.text = thisNpcBehavior.GetNpcHitPoints().ToString();
+        int npcHp = thisNpcBehavior.GetNpcHitPoints();
+        if (npcHp > 0)
+        {
+            thisNpcHpText.text = npcHp.ToString();
+        }
+        else
+        {
+            thisNpcHpText.text = " ";
+            thisNpcZenPrompt.gameObject.SetActive(true);
+        }
     }
 
     public void UpdatePlayerText()
     {
-        thisPlayerHpText.text = thisPlayerBehavior.GetPlayerHitPoints().ToString();
+        int playerHp = thisPlayerBehavior.GetPlayerHitPoints();
+        if (playerHp > 0)
+        {
+            thisPlayerHpText.text = playerHp.ToString();
+        }
+        else
+        {
+            thisPlayerHpText.text = " ";
+            thisPlayerZenPrompt.gameObject.SetActive(true);
+        }
     }
 
     public void UpdatePlayerTurn()

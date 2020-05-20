@@ -235,8 +235,20 @@ public class PlayerBehaviorScript : MonoBehaviour
 
     public void StartPlayerTurn()
     {
-        thisPlayerState = State.eActivated;
-        thisUiManager.UpdatePlayerTurn();
+        // if there is stil hp after damage, then player is alive
+        if (thisHitPoints > 0)
+        {
+            thisPlayerState = State.eActivated;
+            thisUiManager.UpdatePlayerTurn();
+        }
+        else
+        {
+            // enter zen mode
+            thisPlayerState = State.eIdle;
+            // activate npc
+            thisNpcBehavior.StartNpcTurn();
+        }
+
     }
 
     public bool GetIfThePlayerCanClick()

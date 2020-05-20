@@ -157,7 +157,6 @@ public class NpcBehaviorScript : MonoBehaviour
                         if (thisStateTimer < 0)
                         {
                             RandomlyFlipOneCard();
-                            //print("Npc flipped one card\n");
                             InitializeStateTimer();
                             thisNpcState = State.eOneSelected;
 
@@ -390,8 +389,15 @@ public class NpcBehaviorScript : MonoBehaviour
 
     public void StartNpcTurn()
     {
-        thisNpcState = State.eActivated;
-        //thisUiManager.UpdateNpcTurn();
+        if (thisHitPoints > 0)
+        {
+            thisNpcState = State.eActivated;
+        }
+        else
+        {
+            thisNpcState = State.eIdle;
+            thisPlayerBehavior.StartPlayerTurn();
+        }
     }
 
     protected void RandomlyFlipOneCard()
