@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class CardServerScript : MonoBehaviour
 {
@@ -183,7 +184,10 @@ public class CardServerScript : MonoBehaviour
             // when the game is over, temporarily exit out of game editor
             //UnityEditor.EditorApplication.isPlaying = false;
 
-            AnnounceGameResult();
+            thisNpcBehavior.CloseShuffleState();
+            thisNpcBehavior.CloseShuffleState();
+
+            StartCoroutine(CountDownForResult());
         }
     }
 
@@ -204,6 +208,16 @@ public class CardServerScript : MonoBehaviour
             SceneManager.LoadScene("Congrat");
         }
     }
+
+    protected IEnumerator CountDownForResult()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        AnnounceGameResult();
+        yield break;
+    }
+
+
 
     protected bool CheckIfClickable(GameObject aCard)
     {

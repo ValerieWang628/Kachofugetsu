@@ -180,7 +180,6 @@ public class PlayerBehaviorScript : MonoBehaviour
                             {
                                 // switch to idle state because the npc's turn is about to start
                                 thisPlayerState = State.eIdle;
-                                //print("player is now idle\n");
                                 thisNpcBehavior.StartNpcTurn();
                             }
                         }
@@ -222,8 +221,6 @@ public class PlayerBehaviorScript : MonoBehaviour
 
         if (clickableCount == 0)
         {
-            // UnityEditor.EditorApplication.isPlaying = false;
-            //thisCardServer.AnnounceGameResult();
             StartCoroutine(CountDownForResult());
         }
     }
@@ -337,8 +334,10 @@ public class PlayerBehaviorScript : MonoBehaviour
                 case "Wind":
                     {
                         HurtNpc();
-                        thisCardServer.ShuffleClickableCards();
+                        // set lerping to true before card server checks the card
+                        // in case the wind is the last pair and the isLerping needs to be closed
                         thisIsNowLerpingToShuffle = true;
+                        thisCardServer.ShuffleClickableCards();
                         return;
                     }
             }

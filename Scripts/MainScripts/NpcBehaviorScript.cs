@@ -541,8 +541,11 @@ public class NpcBehaviorScript : MonoBehaviour
                 case "Wind":
                     {
                         HurtPlayer();
-                        thisCardServer.ShuffleClickableCards();
+                        // set lerping to true before card server checks the card
+                        // in case the wind is the last pair and the isLerping needs to be closed
                         thisIsNowLerpingToShuffle = true;
+                        thisCardServer.ShuffleClickableCards();
+                        
                     }
                     break;
             }

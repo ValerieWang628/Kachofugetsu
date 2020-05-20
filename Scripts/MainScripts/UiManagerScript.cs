@@ -8,6 +8,8 @@ public class UiManagerScript : MonoBehaviour
 
     [SerializeField] private Text thisNpcHpText;
     [SerializeField] private Text thisPlayerHpText;
+    [SerializeField] private Text thisNpcZenPrompt;
+    [SerializeField] private Text thisPlayerZenPrompt;
     [SerializeField] private Text thisTurnPrompt;
 
     // use the not this is because it won't be used much
