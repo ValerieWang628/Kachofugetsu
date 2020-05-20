@@ -17,6 +17,7 @@ public class UiManagerScript : MonoBehaviour
     [SerializeField] private GameObject theNpc;
     [SerializeField] private GameObject thePlayer;
     [SerializeField] private GameObject thisSwirl;
+    [SerializeField] private GameObject thisShuffleGlow;
 
     private NpcBehaviorScript thisNpcBehavior;
     private PlayerBehaviorScript thisPlayerBehavior;
@@ -77,8 +78,8 @@ public class UiManagerScript : MonoBehaviour
     public void UpdateShuffling()
     {
         thisTurnPrompt.text = "Shuffling";
-
         ActivateSwirl();
+        ActivateShuffleGlow();
     }
 
     protected void ActivateSwirl()
@@ -86,9 +87,9 @@ public class UiManagerScript : MonoBehaviour
         thisSwirl.GetComponent<SwirlScript>().Manifest();
     }
 
-    protected void Update()
+    protected void ActivateShuffleGlow()
     {
-        
+        thisShuffleGlow.GetComponent<ShuffleGlowScript>().StartToFadeInOut();
     }
 
     public void MakeAllCardsEmittable()

@@ -119,6 +119,7 @@ public class CardServerScript : MonoBehaviour
 
     protected void Update()
     {
+        // one-time check
         if (thisHasShuffled)
         {
             if (CheckIfShuffleCompleted())
@@ -127,7 +128,7 @@ public class CardServerScript : MonoBehaviour
                 {
                     thisPlayerBehavior.CloseShuffleState();
                 }
-                // else if npc if shuffling, close npc shuffle state
+                // else if npc is shuffling, close npc shuffle state
                 else if (thisNpcBehavior.GetShuffleState())
                 {
                     thisNpcBehavior.CloseShuffleState();
