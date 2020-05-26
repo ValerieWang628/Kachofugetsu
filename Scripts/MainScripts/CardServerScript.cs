@@ -186,7 +186,7 @@ public class CardServerScript : MonoBehaviour
             //UnityEditor.EditorApplication.isPlaying = false;
 
             thisNpcBehavior.CloseShuffleState();
-            thisNpcBehavior.CloseShuffleState();
+            thisPlayerBehavior.CloseShuffleState();
 
             StartCoroutine(CountDownForResult());
         }

@@ -53,6 +53,11 @@ public class CardScript : MonoBehaviour
         thisEmittable = true;
     }
 
+    public void MakeNotEmittable()
+    {
+        thisEmittable = false;
+    }
+
     protected void OnMouseOver()
     {
         if (!thisHasBeenFlipped)
@@ -187,7 +192,7 @@ public class CardScript : MonoBehaviour
         thisGlow.SetActive(true);
     }
 
-    protected void OmitGlow()
+    public void OmitGlow()
     {
         /* this func makes the glowing frame invisible*/
         thisGlow.SetActive(false);

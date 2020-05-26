@@ -116,8 +116,12 @@ public class PlayerBehaviorScript : MonoBehaviour
         {
             case State.eActivated:
                 {
-                    /* this state contains one time things before the turn really starts*/ 
-
+                    /* this state contains one time things before the turn really starts*/
+                    if (!thisOneMoreRoundAllowed)
+                    {
+                        thisUiManager.StopAnySlash(thisNpcBehavior.gameObject);
+                    }
+                    
                     // check if all cards are flipped
                     CheckClickableCards();
 
@@ -208,14 +212,22 @@ public class PlayerBehaviorScript : MonoBehaviour
 
     protected void CheckClickableCards()
     {
+        /* this is a pre check before player can make actions*/
+
         int clickableCount = 0;
 
         foreach (GameObject aCard in thisAllCardDeck)
         {
-            bool hasBeenFlipped = aCard.GetComponent<CardScript>().GetIfCardHasBeenFlipped();
+            CardScript aCardScript = aCard.GetComponent<CardScript>();
+            bool hasBeenFlipped = aCardScript.GetIfCardHasBeenFlipped();
             if (!hasBeenFlipped)
             {
                 clickableCount += 1;
+            }
+            else
+            {
+                // for flipped cards, turn off the glow that is falsely turned on by the player
+                aCardScript.OmitGlow();
             }
         }
 
@@ -240,6 +252,8 @@ public class PlayerBehaviorScript : MonoBehaviour
         {
             thisPlayerState = State.eActivated;
             thisUiManager.UpdatePlayerTurn();
+            // because npc won't be activated
+            thisUiManager.ToggleAllCardsEmittable(true);
         }
         else
         {
@@ -308,7 +322,7 @@ public class PlayerBehaviorScript : MonoBehaviour
         // if having same card front patterns
         if (oneSprite == anotherSprite)
         {
-
+            thisUiManager.StartNpcHumiliation();
 
             // and do according extra things based on the special tiles
             string theCardCategory = oneCardPrefab.tag;
@@ -332,7 +346,6 @@ public class PlayerBehaviorScript : MonoBehaviour
                     {
                         HurtNpc();
                         // player gets to have one more turn
-                        print("One more turn for player!\n");
                         thisOneMoreRoundAllowed = true;
                         return;
                     }
@@ -382,17 +395,26 @@ public class PlayerBehaviorScript : MonoBehaviour
         // hit Npc, and update the stats
         thisNpcBehavior.OnNormalDamage();
         thisUiManager.UpdateNpcText();
+        if (thisNpcBehavior.GetNpcHitPoints() > 0)
+        {
+            thisUiManager.ActivateSingleSlash(thisNpcBehavior.gameObject);
+        }  
     }
 
     protected void HurtNpcByDouble()
     {
         thisNpcBehavior.OnDoubleDamage();
         thisUiManager.UpdateNpcText();
+        if (thisNpcBehavior.GetNpcHitPoints() > 0)
+        {
+            thisUiManager.ActivateDoubleSlash(thisNpcBehavior.gameObject);
+        }
     }
 
     protected void OnHeal()
     {
         thisHitPoints += 3;
+        thisUiManager.ActivateLeaf(this.gameObject);
         thisUiManager.UpdatePlayerText();
     }
 

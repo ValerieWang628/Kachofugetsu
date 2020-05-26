@@ -137,7 +137,9 @@ public class NpcBehaviorScript : MonoBehaviour
                     /* this state is an interrim wake state 
                      * that completes some one-time things before selection*/
 
-                    
+                    thisUiManager.StopAnySlash(thisPlayerBehavior.gameObject);
+
+                    thisUiManager.ToggleAllCardsEmittable(false);
 
                     // once activated, update clickable list first
                     UpdateClickableList();
@@ -169,7 +171,7 @@ public class NpcBehaviorScript : MonoBehaviour
                             thisUiManager.UpdateNpcTurn();
 
                             // makes all cards emittable when cursor hovered on cards
-                            thisUiManager.MakeAllCardsEmittable();
+                            //thisUiManager.MakeAllCardsEmittable();
 
                             return;
                         }
@@ -253,7 +255,6 @@ public class NpcBehaviorScript : MonoBehaviour
                         {
                             StartNpcTurn();
                             InitializeStateTimer();
-                            //print("npc now has one more round\n");
                             return;
                         }
                         else
@@ -267,6 +268,9 @@ public class NpcBehaviorScript : MonoBehaviour
                             }
                             else
                             {
+                                // makes all cards emittable when cursor hovered on cards
+                                thisUiManager.ToggleAllCardsEmittable(true);
+
                                 thisNpcState = State.eIdle;
                                 thisPlayerBehavior.StartPlayerTurn();
                                 InitializeStateTimer();
@@ -280,6 +284,9 @@ public class NpcBehaviorScript : MonoBehaviour
                 {
                     if (!thisIsNowLerpingToShuffle)
                     {
+                        // makes all cards emittable when cursor hovered on cards
+                        thisUiManager.ToggleAllCardsEmittable(true);
+
                         thisNpcState = State.eIdle;
                         thisPlayerBehavior.StartPlayerTurn();
                         InitializeStateTimer();
@@ -449,13 +456,6 @@ public class NpcBehaviorScript : MonoBehaviour
                 }
                 break;
         }
-
-        //foreach (GameObject aCard in thisMemoryList)
-        //{
-        //    print("memory list updated from player selection: " + aCard.name + " \n");
-        //}
-
-        //print("End of the memory List\n");
     }
 
     protected void UpdateMemoryFromSelfSelection()
@@ -470,12 +470,6 @@ public class NpcBehaviorScript : MonoBehaviour
         thisMemoryList.Add(thisSelectionList[0]);
         thisMemoryList.Add(thisSelectionList[1]);
 
-        //foreach (GameObject aCard in thisMemoryList)
-        //{
-        //    print("memory list updated from slef selection: " + aCard.name + " \n");
-        //}
-
-        //print("End of the memory List\n");
     }
 
     public int GetNpcHitPoints()
@@ -511,6 +505,8 @@ public class NpcBehaviorScript : MonoBehaviour
         // if having same card front patterns
         if (oneSprite == anotherSprite)
         {
+            // start humiliation
+            thisUiManager.StartPlayerHumiliation();
 
             // and do according extra things based on the special tiles
             string theCardCategory = oneCardPrefab.tag;
@@ -583,17 +579,26 @@ public class NpcBehaviorScript : MonoBehaviour
     {
         thisPlayerBehavior.OnNormalDamage();
         thisUiManager.UpdatePlayerText();
+        if (thisPlayerBehavior.GetPlayerHitPoints() > 0)
+        {
+            thisUiManager.ActivateSingleSlash(thisPlayerBehavior.gameObject);
+        }
     }
 
     protected void HurtPlayerByDouble()
     {
         thisPlayerBehavior.OnDoubleDamage();
         thisUiManager.UpdatePlayerText();
+        if (thisPlayerBehavior.GetPlayerHitPoints() > 0)
+        {
+            thisUiManager.ActivateDoubleSlash(thisPlayerBehavior.gameObject);
+        }
     }
 
     protected void OnHeal()
     {
         thisHitPoints += 3;
+        thisUiManager.ActivateLeaf(this.gameObject);
         thisUiManager.UpdateNpcText();
     }
 }
