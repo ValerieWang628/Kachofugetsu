@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class EyeBlinkingScript : MonoBehaviour
 {
+    [SerializeField] private GameObject theSelfDialog;
+    private InGameDialogScript thisSelfDialog;
+
     [SerializeField] private Sprite thisEyeOpenSprite;
     [SerializeField] private Sprite thisEyeCloseSprite;
     [SerializeField] private float thisOpenMin;
@@ -20,6 +23,7 @@ public class EyeBlinkingScript : MonoBehaviour
     private SpriteRenderer thisMaskSprRdr;
 
     private List<List<Sprite>> thisLookGallery = new List<List<Sprite>>();
+    private List<List<Sprite>> thisLookGalleryCopy = new List<List<Sprite>>();
 
     private int thisCurrentI = 100;
 
@@ -47,9 +51,11 @@ public class EyeBlinkingScript : MonoBehaviour
         thisEyeSpriteRenderer = GetComponent<SpriteRenderer>();
         eyeState = State.eWaiting;
         thisTimer = Random.Range(thisOpenMin, thisOpenMax);
+        thisSelfDialog = theSelfDialog.GetComponent<InGameDialogScript>();
 
         InitializeMasks();
         InitializeLooks();
+        InitializeLookCopy();
     }
 
     protected void InitializeMasks()
@@ -70,6 +76,19 @@ public class EyeBlinkingScript : MonoBehaviour
         thisLookGallery.Add(thisLook8);
     }
 
+    protected void InitializeLookCopy()
+    {
+        thisLookGalleryCopy.Add(thisLook0);
+        thisLookGalleryCopy.Add(thisLook1);
+        thisLookGalleryCopy.Add(thisLook2);
+        thisLookGalleryCopy.Add(thisLook3);
+        thisLookGalleryCopy.Add(thisLook4);
+        thisLookGalleryCopy.Add(thisLook5);
+        thisLookGalleryCopy.Add(thisLook6);
+        thisLookGalleryCopy.Add(thisLook7);
+        thisLookGalleryCopy.Add(thisLook8);
+    }
+
     protected void Update()
     {
         UpdateSwitch();   
@@ -84,6 +103,23 @@ public class EyeBlinkingScript : MonoBehaviour
         }
         // fetch a new rand ind
         thisCurrentI = Random.Range(0, thisLookGallery.Count);
+
+        // call dialog to update text
+        //foreach (List<Sprite> aSpriteList in thisLookGalleryCopy)
+        //{
+        //    if (thisLookGallery[thisCurrentI] == aSpriteList)
+        //    {
+
+        //    }
+        //}
+        for (int i = 0; i < thisLookGalleryCopy.Count; i++)
+        {
+            if (thisLookGallery[thisCurrentI] == thisLookGalleryCopy[i])
+            {
+                thisSelfDialog.DisplayDialog(i);
+                return;
+            }
+        }
     }
 
     protected void UpdateSwitch()

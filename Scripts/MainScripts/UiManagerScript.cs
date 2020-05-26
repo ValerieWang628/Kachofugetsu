@@ -12,6 +12,9 @@ public class UiManagerScript : MonoBehaviour
     [SerializeField] private Text thisPlayerZenPrompt;
     [SerializeField] private Text thisTurnPrompt;
 
+    [SerializeField] private GameObject thisPlayerDialogBox;
+    [SerializeField] private GameObject thisNpcDialogBox;
+
     [SerializeField] private GameObject theNpc;
     [SerializeField] private GameObject thePlayer;
 
@@ -202,12 +205,14 @@ public class UiManagerScript : MonoBehaviour
     {
         thisGoemonEye.StartHumiliation();
         thisGoemonEye.AbortState();
+        thisPlayerDialogBox.SetActive(true);
     }
 
     public void StartNpcHumiliation()
     {
         thisFujikoEye.StartHumiliation();
         thisFujikoEye.AbortState();
+        thisNpcDialogBox.SetActive(true);
     }
 
 }
