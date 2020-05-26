@@ -201,12 +201,13 @@ public class UiManagerScript : MonoBehaviour
     public void StartPlayerHumiliation()
     {
         thisGoemonEye.StartHumiliation();
+        thisGoemonEye.AbortState();
     }
 
     public void StartNpcHumiliation()
     {
         thisFujikoEye.StartHumiliation();
+        thisFujikoEye.AbortState();
     }
-
 
 }

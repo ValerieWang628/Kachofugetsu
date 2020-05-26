@@ -12,6 +12,8 @@ public class EyeBlinkingScript : MonoBehaviour
 
     private float thisTimer;
 
+    private bool thisStateAborted = false;
+
     [SerializeField] private GameObject thisMask;
     [SerializeField] private GameObject thisOriginalHair;
 
@@ -90,6 +92,12 @@ public class EyeBlinkingScript : MonoBehaviour
         {
             case State.eWaiting:
                 {
+                    if (thisStateAborted)
+                    {
+                        thisStateAborted = false;
+                        return;
+                    }
+
                     thisTimer -= Time.deltaTime;
 
                     if (thisTimer < 0)
@@ -164,6 +172,12 @@ public class EyeBlinkingScript : MonoBehaviour
                 return;
             }
         }
-
     }
+
+    public void AbortState()
+    {
+        thisStateAborted = true;
+        eyeState = State.eOpen;
+    }
+
 }
