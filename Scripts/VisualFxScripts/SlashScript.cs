@@ -4,7 +4,6 @@ using UnityEngine;
 public class SlashScript : MonoBehaviour
 {
     [SerializeField] private GameObject thisEndDot;
-    private TrailRenderer thisTrailRenderer;
     private Vector3 thisOriginalPos;
     private Vector3 thisEndPos;
     private IEnumerator thisSlashCoroutine;
@@ -14,8 +13,6 @@ public class SlashScript : MonoBehaviour
 
     protected void Start()
     {
-        thisTrailRenderer = this.GetComponent<TrailRenderer>();
-
         thisOriginalPos = this.transform.position;
 
         thisEndPos = thisEndDot.transform.position;

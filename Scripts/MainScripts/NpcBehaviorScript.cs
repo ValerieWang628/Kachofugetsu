@@ -137,7 +137,7 @@ public class NpcBehaviorScript : MonoBehaviour
                     /* this state is an interrim wake state 
                      * that completes some one-time things before selection*/
 
-                    thisUiManager.StopAnySlash(thisPlayerBehavior.gameObject);
+                    //thisUiManager.StopAnySlash(thisPlayerBehavior.gameObject);
 
                     thisUiManager.ToggleAllCardsEmittable(false);
 
@@ -581,6 +581,7 @@ public class NpcBehaviorScript : MonoBehaviour
         thisUiManager.UpdatePlayerText();
         if (thisPlayerBehavior.GetPlayerHitPoints() > 0)
         {
+            thisUiManager.StopAnySlash(thisPlayerBehavior.gameObject);
             thisUiManager.ActivateSingleSlash(thisPlayerBehavior.gameObject);
         }
     }
@@ -589,8 +590,10 @@ public class NpcBehaviorScript : MonoBehaviour
     {
         thisPlayerBehavior.OnDoubleDamage();
         thisUiManager.UpdatePlayerText();
+        thisUiManager.StartInGameLine("DoubleDamage", this.gameObject);
         if (thisPlayerBehavior.GetPlayerHitPoints() > 0)
         {
+            thisUiManager.StopAnySlash(thisPlayerBehavior.gameObject);
             thisUiManager.ActivateDoubleSlash(thisPlayerBehavior.gameObject);
         }
     }
@@ -600,5 +603,6 @@ public class NpcBehaviorScript : MonoBehaviour
         thisHitPoints += 3;
         thisUiManager.ActivateLeaf(this.gameObject);
         thisUiManager.UpdateNpcText();
+        thisUiManager.StartInGameLine("Healed", this.gameObject);
     }
 }

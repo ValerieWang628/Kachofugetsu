@@ -15,6 +15,9 @@ public class UiManagerScript : MonoBehaviour
     [SerializeField] private GameObject thisPlayerDialogBox;
     [SerializeField] private GameObject thisNpcDialogBox;
 
+    private InGameDialogScript thisPlayerBoxScript;
+    private InGameDialogScript thisNpcBoxScript;
+
     [SerializeField] private GameObject theNpc;
     [SerializeField] private GameObject thePlayer;
 
@@ -56,6 +59,9 @@ public class UiManagerScript : MonoBehaviour
 
         thisGoemonEye = theGoemonEye.GetComponent<EyeBlinkingScript>();
         thisFujikoEye = theFujikoEye.GetComponent<EyeBlinkingScript>();
+
+        thisPlayerBoxScript = thisPlayerDialogBox.GetComponent<InGameDialogScript>();
+        thisNpcBoxScript = thisNpcDialogBox.GetComponent<InGameDialogScript>();
     }
 
     public void UpdateNpcText()
@@ -213,6 +219,42 @@ public class UiManagerScript : MonoBehaviour
         thisFujikoEye.StartHumiliation();
         thisFujikoEye.AbortState();
         thisNpcDialogBox.SetActive(true);
+    }
+
+    public void StartInGameLine(string theAction, GameObject theSubject)
+    {
+        switch (theAction)
+        {
+            case "Healed":
+                {
+                    if (theSubject == thisPlayerBehavior.gameObject)
+                    {
+                        thisPlayerDialogBox.SetActive(true);
+                        thisPlayerBoxScript.DisplayHealedLine();
+                    }
+                    else if (theSubject == thisNpcBehavior.gameObject)
+                    {
+                        thisNpcDialogBox.SetActive(true);
+                        thisNpcBoxScript.DisplayHealedLine();
+                    }
+                }
+                break;
+
+            case "DoubleDamage":
+                {
+                    if (theSubject == thisPlayerBehavior.gameObject)
+                    {
+                        thisPlayerDialogBox.SetActive(true);
+                        thisPlayerBoxScript.DisplayDoubleDamageLine();
+                    }
+                    else if (theSubject == thisNpcBehavior.gameObject)
+                    {
+                        thisNpcDialogBox.SetActive(true);
+                        thisNpcBoxScript.DisplayDoubleDamageLine();
+                    }
+                }
+                break;
+        }
     }
 
 }

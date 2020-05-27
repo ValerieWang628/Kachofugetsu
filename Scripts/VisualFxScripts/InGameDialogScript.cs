@@ -5,9 +5,12 @@ using UnityEngine.UI;
 public class InGameDialogScript : MonoBehaviour
 {
     private float thisTimer;
-    private float thisDuration = 3f;
+    private float thisDuration = 4.5f;
 
     [SerializeField] Text thisSelfDialog;
+
+    [SerializeField] string thisHealedLine;
+    [SerializeField] string thisDoubleDamageOthersLine;
 
     [SerializeField] List<string> thisDialogList = new List<string>();
 
@@ -40,5 +43,21 @@ public class InGameDialogScript : MonoBehaviour
     {
         thisSelfDialog.gameObject.SetActive(true);
         thisSelfDialog.text = thisDialogList[i];
+    }
+
+    public void DisplayHealedLine()
+    {
+        DisplaySpecialLine(thisHealedLine);
+    }
+
+    public void DisplayDoubleDamageLine()
+    {
+        DisplaySpecialLine(thisDoubleDamageOthersLine);
+    }
+
+    protected void DisplaySpecialLine(string aLine)
+    {
+        thisSelfDialog.gameObject.SetActive(true);
+        thisSelfDialog.text = aLine;
     }
 }

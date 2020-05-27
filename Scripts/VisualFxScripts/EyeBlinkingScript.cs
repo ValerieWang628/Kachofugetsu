@@ -55,7 +55,6 @@ public class EyeBlinkingScript : MonoBehaviour
 
         InitializeMasks();
         InitializeLooks();
-        InitializeLookCopy();
     }
 
     protected void InitializeMasks()
@@ -65,28 +64,11 @@ public class EyeBlinkingScript : MonoBehaviour
 
     protected void InitializeLooks()
     {
-        thisLookGallery.Add(thisLook0);
-        thisLookGallery.Add(thisLook1);
-        thisLookGallery.Add(thisLook2);
-        thisLookGallery.Add(thisLook3);
-        thisLookGallery.Add(thisLook4);
-        thisLookGallery.Add(thisLook5);
-        thisLookGallery.Add(thisLook6);
-        thisLookGallery.Add(thisLook7);
-        thisLookGallery.Add(thisLook8);
-    }
+        List<Sprite>[] aSpriteList = {thisLook0, thisLook1, thisLook2, thisLook3, thisLook4, 
+                                        thisLook5, thisLook6, thisLook7, thisLook8};
 
-    protected void InitializeLookCopy()
-    {
-        thisLookGalleryCopy.Add(thisLook0);
-        thisLookGalleryCopy.Add(thisLook1);
-        thisLookGalleryCopy.Add(thisLook2);
-        thisLookGalleryCopy.Add(thisLook3);
-        thisLookGalleryCopy.Add(thisLook4);
-        thisLookGalleryCopy.Add(thisLook5);
-        thisLookGalleryCopy.Add(thisLook6);
-        thisLookGalleryCopy.Add(thisLook7);
-        thisLookGalleryCopy.Add(thisLook8);
+        thisLookGallery = new List<List<Sprite>>(aSpriteList);
+        thisLookGalleryCopy = new List<List<Sprite>>(aSpriteList);
     }
 
     protected void Update()
@@ -104,14 +86,6 @@ public class EyeBlinkingScript : MonoBehaviour
         // fetch a new rand ind
         thisCurrentI = Random.Range(0, thisLookGallery.Count);
 
-        // call dialog to update text
-        //foreach (List<Sprite> aSpriteList in thisLookGalleryCopy)
-        //{
-        //    if (thisLookGallery[thisCurrentI] == aSpriteList)
-        //    {
-
-        //    }
-        //}
         for (int i = 0; i < thisLookGalleryCopy.Count; i++)
         {
             if (thisLookGallery[thisCurrentI] == thisLookGalleryCopy[i])

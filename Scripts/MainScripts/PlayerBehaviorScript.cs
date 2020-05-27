@@ -117,10 +117,6 @@ public class PlayerBehaviorScript : MonoBehaviour
             case State.eActivated:
                 {
                     /* this state contains one time things before the turn really starts*/
-                    if (!thisOneMoreRoundAllowed)
-                    {
-                        thisUiManager.StopAnySlash(thisNpcBehavior.gameObject);
-                    }
                     
                     // check if all cards are flipped
                     CheckClickableCards();
@@ -397,6 +393,7 @@ public class PlayerBehaviorScript : MonoBehaviour
         thisUiManager.UpdateNpcText();
         if (thisNpcBehavior.GetNpcHitPoints() > 0)
         {
+            thisUiManager.StopAnySlash(thisNpcBehavior.gameObject);
             thisUiManager.ActivateSingleSlash(thisNpcBehavior.gameObject);
         }  
     }
@@ -405,8 +402,10 @@ public class PlayerBehaviorScript : MonoBehaviour
     {
         thisNpcBehavior.OnDoubleDamage();
         thisUiManager.UpdateNpcText();
+        thisUiManager.StartInGameLine("DoubleDamage", this.gameObject);
         if (thisNpcBehavior.GetNpcHitPoints() > 0)
         {
+            thisUiManager.StopAnySlash(thisNpcBehavior.gameObject);
             thisUiManager.ActivateDoubleSlash(thisNpcBehavior.gameObject);
         }
     }
@@ -416,6 +415,7 @@ public class PlayerBehaviorScript : MonoBehaviour
         thisHitPoints += 3;
         thisUiManager.ActivateLeaf(this.gameObject);
         thisUiManager.UpdatePlayerText();
+        thisUiManager.StartInGameLine("Healed", this.gameObject);
     }
 
     public void OnNormalDamage()

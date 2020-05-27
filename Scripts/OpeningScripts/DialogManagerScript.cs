@@ -37,24 +37,30 @@ public class DialogManagerScript : MonoBehaviour
 
     protected void InitializeFujikoDialogBook()
     {
-        thisFujikoDialogBook.Add("Goemon, you stink a bit. You doing all great?");
-        thisFujikoDialogBook.Add("What was that? I've stolen too many things.");
-        thisFujikoDialogBook.Add("Oh, the tub. I had a good time with it eailier today.");
-        thisFujikoDialogBook.Add("How about we play a memory-match game?");
-        thisFujikoDialogBook.Add("Try to damage my hp by matching the cards.");
-        thisFujikoDialogBook.Add("If you have higher hp at the end, you win.");
+        thisFujikoDialogBook.Add("Goemon , you stink !!! Are you okay?");
+        thisFujikoDialogBook.Add("What was that? I've stolen too many things , including many men's hearts.");
+        thisFujikoDialogBook.Add("Oh , the tub. I had a good time with it eailier today.");
+        thisFujikoDialogBook.Add("Hmmmm...How about we play a memory match game?");
+        thisFujikoDialogBook.Add("Flip the cards , and match as many pairs as possible to damage my hp.");
+        thisFujikoDialogBook.Add("If a pair is matched , you can give me a stupid makeover as you want.");
+        thisFujikoDialogBook.Add("And if I match a pair, you are gonna look very funny. And you'll shout out stupid lines as well.");
+        thisFujikoDialogBook.Add("Wait... I'll let you be the first hand. How bout dat?");
+        thisFujikoDialogBook.Add("If you have higher hp at the end , you win.");
         thisFujikoDialogBook.Add("And you get your lovely tub back.");
     }
 
     protected void InitializeGoemonDialogBook()
     {
-        thisGoemonDialogBook.Add("Not good until I get what you have stolen from me.");
+        thisGoemonDialogBook.Add("Not okay until I get what you have stolen from me.");
         thisGoemonDialogBook.Add("My favorite cauldron bathtub. I can't sleep without it.");
-        thisGoemonDialogBook.Add("I need it, too. Fujiko, let's be reasonable.");
-        thisGoemonDialogBook.Add("...?");
+        thisGoemonDialogBook.Add("I need it , too. Fujiko , let's be reasonable.");
+        thisGoemonDialogBook.Add("Sounds stupid , but go ahead and explain.");
+        thisGoemonDialogBook.Add("...");
+        thisGoemonDialogBook.Add("...I don't think you need a makeover to look stupid.");
+        thisGoemonDialogBook.Add("...Oh this is so fair. Not humiliating at all. I'm out.");
         thisGoemonDialogBook.Add("...");
         thisGoemonDialogBook.Add("...");
-        thisGoemonDialogBook.Add("Deal.");
+        thisGoemonDialogBook.Add("Deal. Make sure you disinfect my tub before returning it.");
     }
 
 
