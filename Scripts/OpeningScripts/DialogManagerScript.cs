@@ -43,7 +43,7 @@ public class DialogManagerScript : MonoBehaviour
         thisFujikoDialogBook.Add("Hmmmm...How about we play a memory match game?");
         thisFujikoDialogBook.Add("Flip the cards , and match as many pairs as possible to damage my hp.");
         thisFujikoDialogBook.Add("If a pair is matched , you can give me a stupid makeover as you want.");
-        thisFujikoDialogBook.Add("And if I match a pair, you are gonna look very funny. And you'll shout out stupid lines as well.");
+        thisFujikoDialogBook.Add("If I match a pair, you are gonna look very funny. And you'll shout out stupid lines as well.");
         thisFujikoDialogBook.Add("Wait... I'll let you be the first hand. How bout dat?");
         thisFujikoDialogBook.Add("If you have higher hp at the end , you win.");
         thisFujikoDialogBook.Add("And you get your lovely tub back.");
@@ -91,7 +91,7 @@ public class DialogManagerScript : MonoBehaviour
                         if (thisCurrentDialogIndex >= thisFujikoDialogBook.Count)
                         {
                         //UnityEditor.EditorApplication.isPlaying = false;
-                        SceneManager.LoadScene("Loading");
+                        SceneManager.LoadScene("Tutorial");
                         }
 
                         thisDialogState = State.eFujikoSpeaks;

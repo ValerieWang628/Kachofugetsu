@@ -225,32 +225,62 @@ public class UiManagerScript : MonoBehaviour
     {
         switch (theAction)
         {
-            case "Healed":
+            case "Moon":
                 {
                     if (theSubject == thisPlayerBehavior.gameObject)
                     {
                         thisPlayerDialogBox.SetActive(true);
-                        thisPlayerBoxScript.DisplayHealedLine();
+                        thisPlayerBoxScript.DisplayMoonLine();
                     }
                     else if (theSubject == thisNpcBehavior.gameObject)
                     {
                         thisNpcDialogBox.SetActive(true);
-                        thisNpcBoxScript.DisplayHealedLine();
+                        thisNpcBoxScript.DisplayMoonLine();
                     }
                 }
                 break;
 
-            case "DoubleDamage":
+            case "Flower":
                 {
                     if (theSubject == thisPlayerBehavior.gameObject)
                     {
                         thisPlayerDialogBox.SetActive(true);
-                        thisPlayerBoxScript.DisplayDoubleDamageLine();
+                        thisPlayerBoxScript.DisplayFlowerLine();
                     }
                     else if (theSubject == thisNpcBehavior.gameObject)
                     {
                         thisNpcDialogBox.SetActive(true);
-                        thisNpcBoxScript.DisplayDoubleDamageLine();
+                        thisNpcBoxScript.DisplayFlowerLine();
+                    }
+                }
+                break;
+
+            case "Wind":
+                {
+                    if (theSubject == thisPlayerBehavior.gameObject)
+                    {
+                        thisPlayerDialogBox.SetActive(true);
+                        thisPlayerBoxScript.DisplayWindLine();
+                    }
+                    else if (theSubject == thisNpcBehavior.gameObject)
+                    {
+                        thisNpcDialogBox.SetActive(true);
+                        thisNpcBoxScript.DisplayWindLine();
+                    }
+                }
+                break;
+
+            case "Bird":
+                {
+                    if (theSubject == thisPlayerBehavior.gameObject)
+                    {
+                        thisPlayerDialogBox.SetActive(true);
+                        thisPlayerBoxScript.DisplayBirdLine();
+                    }
+                    else if (theSubject == thisNpcBehavior.gameObject)
+                    {
+                        thisNpcDialogBox.SetActive(true);
+                        thisNpcBoxScript.DisplayBirdLine();
                     }
                 }
                 break;

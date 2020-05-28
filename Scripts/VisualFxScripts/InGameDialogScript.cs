@@ -9,8 +9,10 @@ public class InGameDialogScript : MonoBehaviour
 
     [SerializeField] Text thisSelfDialog;
 
-    [SerializeField] string thisHealedLine;
-    [SerializeField] string thisDoubleDamageOthersLine;
+    [SerializeField] string thisMoonLine;
+    [SerializeField] string thisBirdLine;
+    [SerializeField] string thisWindLine;
+    [SerializeField] string thisFlowerLine;
 
     [SerializeField] List<string> thisDialogList = new List<string>();
 
@@ -45,14 +47,24 @@ public class InGameDialogScript : MonoBehaviour
         thisSelfDialog.text = thisDialogList[i];
     }
 
-    public void DisplayHealedLine()
+    public void DisplayMoonLine()
     {
-        DisplaySpecialLine(thisHealedLine);
+        DisplaySpecialLine(thisMoonLine);
     }
 
-    public void DisplayDoubleDamageLine()
+    public void DisplayFlowerLine()
     {
-        DisplaySpecialLine(thisDoubleDamageOthersLine);
+        DisplaySpecialLine(thisFlowerLine);
+    }
+
+    public void DisplayWindLine()
+    {
+        DisplaySpecialLine(thisWindLine);
+    }
+
+    public void DisplayBirdLine()
+    {
+        DisplaySpecialLine(thisBirdLine);
     }
 
     protected void DisplaySpecialLine(string aLine)

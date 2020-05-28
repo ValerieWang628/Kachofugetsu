@@ -531,6 +531,7 @@ public class NpcBehaviorScript : MonoBehaviour
                         // npc gets to have one more turn
                         //print("one more turn for Npc\n");
                         thisOneMoreRoundAllowed = true;
+                        thisUiManager.StartInGameLine("Bird", this.gameObject);
                     }
                     break;
 
@@ -547,7 +548,8 @@ public class NpcBehaviorScript : MonoBehaviour
                         // in case the wind is the last pair and the isLerping needs to be closed
                         thisIsNowLerpingToShuffle = true;
                         thisCardServer.ShuffleClickableCards();
-                        
+                        thisUiManager.StartInGameLine("Wind", this.gameObject);
+
                     }
                     break;
             }
@@ -579,6 +581,7 @@ public class NpcBehaviorScript : MonoBehaviour
     {
         thisPlayerBehavior.OnNormalDamage();
         thisUiManager.UpdatePlayerText();
+
         if (thisPlayerBehavior.GetPlayerHitPoints() > 0)
         {
             thisUiManager.StopAnySlash(thisPlayerBehavior.gameObject);
@@ -590,7 +593,8 @@ public class NpcBehaviorScript : MonoBehaviour
     {
         thisPlayerBehavior.OnDoubleDamage();
         thisUiManager.UpdatePlayerText();
-        thisUiManager.StartInGameLine("DoubleDamage", this.gameObject);
+        thisUiManager.StartInGameLine("Flower", this.gameObject);
+
         if (thisPlayerBehavior.GetPlayerHitPoints() > 0)
         {
             thisUiManager.StopAnySlash(thisPlayerBehavior.gameObject);
@@ -603,6 +607,6 @@ public class NpcBehaviorScript : MonoBehaviour
         thisHitPoints += 3;
         thisUiManager.ActivateLeaf(this.gameObject);
         thisUiManager.UpdateNpcText();
-        thisUiManager.StartInGameLine("Healed", this.gameObject);
+        thisUiManager.StartInGameLine("Moon", this.gameObject);
     }
 }
