@@ -5,6 +5,12 @@ using System.Collections;
 
 public class CardServerScript : MonoBehaviour
 {
+    [SerializeField] private AudioSource thisBg;
+    private AudioManagerScript thisAudioManager;
+
+    private float t = 0f;
+
+    private float thisFadeOutDuration = 0.9f;
 
     // player
     [SerializeField] private GameObject thePlayer;
@@ -42,6 +48,8 @@ public class CardServerScript : MonoBehaviour
         InitializeCardPoints();
         InitializeAllCardDeck();
         ServeTheCards();
+
+        thisAudioManager = (AudioManagerScript)FindObjectOfType(typeof(AudioManagerScript));
     }
 
     protected void Start()
@@ -198,15 +206,18 @@ public class CardServerScript : MonoBehaviour
         int thePlayerHp = thisPlayerBehavior.GetPlayerHitPoints();
         if (theNpcHp - thePlayerHp > 0)
         {
-            SceneManager.LoadScene("Fail");
+            //SceneManager.LoadScene("Fail");
+            thisAudioManager.StartFadingOut("Fail", thisBg, thisBg.volume, thisFadeOutDuration, t);
         }
         else if (theNpcHp - thePlayerHp == 0)
         {
-            SceneManager.LoadScene("Tie");
+            //SceneManager.LoadScene("Tie");
+            thisAudioManager.StartFadingOut("Tie", thisBg, thisBg.volume, thisFadeOutDuration, t);
         }
         else if (theNpcHp - thePlayerHp < 0)
         {
-            SceneManager.LoadScene("Congrat");
+            //SceneManager.LoadScene("Congrat");
+            thisAudioManager.StartFadingOut("Congrat", thisBg, thisBg.volume, thisFadeOutDuration, t);
         }
     }
 

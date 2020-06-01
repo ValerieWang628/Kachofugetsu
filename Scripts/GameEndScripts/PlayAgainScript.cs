@@ -1,14 +1,24 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayAgainScript : MonoBehaviour
 {
+    [SerializeField] private AudioSource thisBg;
+    private AudioManagerScript thisAudioManager;
+
+    private float t = 0f;
+
+    private float thisFadeOutDuration = 0.5f;
+
+    protected void Awake()
+    {
+        thisAudioManager = (AudioManagerScript)FindObjectOfType(typeof(AudioManagerScript));
+    }
 
     protected void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            SceneManager.LoadScene("Main");
+            thisAudioManager.StartFadingOut("Main", thisBg, thisBg.volume, thisFadeOutDuration, t);
         }
     }
 }

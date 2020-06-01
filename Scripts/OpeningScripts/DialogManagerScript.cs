@@ -1,10 +1,15 @@
-﻿using UnityEngine.SceneManagement;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogManagerScript : MonoBehaviour
 {
+    [SerializeField] private AudioSource thisBg;
+    private AudioManagerScript thisAudioManager;
+
+    private float t = 0f;
+    private float thisFadeOutDuration = 0.3f;
+
     [SerializeField] private GameObject thisFujikoDialogBox;
     [SerializeField] private GameObject thisGoemonDialogBox;
     [SerializeField] private Text thisFujikoText;
@@ -27,6 +32,12 @@ public class DialogManagerScript : MonoBehaviour
     }
 
     private State thisDialogState;
+
+    protected void Awake()
+    {
+        //thisAudioManager = GameObject.Find("AudioManager").GetComponent<AudioManagerScript>();
+        thisAudioManager = (AudioManagerScript)FindObjectOfType(typeof(AudioManagerScript));
+    }
 
     protected void Start()
     {
@@ -90,8 +101,9 @@ public class DialogManagerScript : MonoBehaviour
                         // if out of dialog, start next scene
                         if (thisCurrentDialogIndex >= thisFujikoDialogBook.Count)
                         {
-                        //UnityEditor.EditorApplication.isPlaying = false;
-                        SceneManager.LoadScene("Tutorial");
+                            thisAudioManager.StartFadingOut("Tutorial", thisBg, thisBg.volume, thisFadeOutDuration, t);
+                            // has to add return or the states go on
+                            return;
                         }
 
                         thisDialogState = State.eFujikoSpeaks;
